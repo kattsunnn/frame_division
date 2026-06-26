@@ -31,15 +31,18 @@ def create_video_from_images(image_folder, output_path, fps=30):
     print("Video generation complete!")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Create a video from a folder of images")
+    parser = argparse.ArgumentParser(
+        description="Create a video from a folder of images.",
+        epilog="""Example:
+  uv run create_video_from_images.py -i ./frames -o ./output_video.mp4 -f 30
+""",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     
-    parser.add_argument("-i", "--input", dest="input_folder", required=True, help="Path to input images")
-    parser.add_argument("-o", "--output", dest="output_video_path", required=True, help="Path to output video")
+    parser.add_argument("-i", "--input", required=True, help="Path to the input directory containing images")
+    parser.add_argument("-o", "--output", required=True, help="Path to the output video file")
     parser.add_argument("-f", "--fps", type=int, default=30, help="Frames per second (default: 30)")
     args = parser.parse_args()
 
     # 実行部分
-    create_video_from_images(args.input_folder, args.output_video_path, args.fps)
-
-# Example Execution:
-# create_video_from_images("./output_folder", "./output_video.mp4")
+    create_video_from_images(args.input, args.output, args.fps)

@@ -43,12 +43,18 @@ def get_sync_frames(root_dir, target_filename, output_dir):
     print(f"出力先: {output_path.resolve()}")
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="Recursively find and copy specific sync frames.",
+        epilog="""Example:
+  uv run get_sync_frames.py -i ./camera_data -o ./sync_results -f 0050.jpg
+""",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("-i", "--input", required=True, help="Path to the search root directory")
+    parser.add_argument("-o", "--output", required=True, help="Path to the output destination directory")
+    parser.add_argument("-f", "--filename", required=True, help="Target file name to search (e.g. 0050.jpg)")
 
-    import sys
-    # sys.argv[0] はスクリプト名なので、1番目から順に取得します
-    root_dir = sys.argv[1]
-    output_dir = sys.argv[2]
-    target_filename = sys.argv[3]
+    args = parser.parse_args()
 
     # 関数実行
-    get_sync_frames(root_dir, target_filename, output_dir)
+    get_sync_frames(args.input, args.filename, args.output)

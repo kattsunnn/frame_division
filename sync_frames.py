@@ -46,12 +46,17 @@ def sync_frames(target_dir, sync_start_index):
     print(f"リネーム後の総枚数: {processed_count} 枚")
 
 if __name__ == '__main__':
-    
-    import sys
+    parser = argparse.ArgumentParser(
+        description="Synchronize frames by removing preceding ones and shifting indexes.",
+        epilog="""Example:
+  uv run sync_frames.py -i ./frames -n 5
+""",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("-i", "--input", required=True, help="Path to the input directory containing images")
+    parser.add_argument("-n", "--index", type=int, required=True, help="Synchronize start frame index (number)")
 
-    target_dir = sys.argv[1]
-    sync_start_index = float(sys.argv[2])
+    args = parser.parse_args()
 
-
-    sync_frames(target_dir, sync_start_index)
+    sync_frames(args.input, args.index)
     
